@@ -302,7 +302,7 @@
 <!-- ═══════════════════════════════════════════════════════════════ -->
 
 <g transform="translate(60, 450)">
-  <rect x="0" y="0" width="310" height="840" rx="6" fill="#120d2e" stroke="#7c3aed" stroke-width="1.5"/>
+  <rect x="0" y="0" width="310" height="900" rx="6" fill="#120d2e" stroke="#7c3aed" stroke-width="1.5"/>
   <rect x="0" y="0" width="310" height="24" rx="6" fill="#7c3aed" opacity="0.2"/>
   <rect x="0" y="6" width="310" height="18" fill="#7c3aed" opacity="0.2"/>
   <text x="155" y="16" fill="#a371f7" font-size="10" font-family="'SF Mono',monospace" text-anchor="middle" font-weight="700" letter-spacing="1">SUPABASE POSTGRES  ·  RLS ENABLED</text>
@@ -313,90 +313,91 @@
   <text x="155" y="60" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace" text-anchor="middle">JWT 1hr access · 7d httpOnly refresh cookie · TOTP aal1→aal2</text>
   <text x="155" y="72" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace" text-anchor="middle">Invite-only · invite_token in users table</text>
 
-  <!-- profiles -->
-  <rect x="8" y="86" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <!-- profiles — long role line split into two -->
+  <rect x="8" y="86" width="294" height="62" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
   <text x="14" y="101" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">profiles</text>
-  <text x="14" y="115" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id(uuid) · email · full_name · role(super_admin|attendee|reviewer|developer)</text>
-  <text x="14" y="129" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">invite_token · invited_at · created_at</text>
+  <text x="14" y="115" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id(uuid) · email · full_name</text>
+  <text x="14" y="127" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">role(super_admin|attendee|reviewer|developer)</text>
+  <text x="14" y="141" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">invite_token · invited_at · created_at</text>
 
   <!-- projects -->
-  <rect x="8" y="146" width="294" height="62" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="161" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">projects</text>
-  <text x="14" y="175" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · created_by(fk) · name · startup_name · description</text>
-  <text x="14" y="187" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">status CHECK(draft|building_graph|open|consensus|rebuttals|final|failed)</text>
-  <text x="14" y="199" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">collection_closed_at · graph_built_at · created_at</text>
+  <rect x="8" y="156" width="294" height="62" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="171" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">projects</text>
+  <text x="14" y="185" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · created_by(fk) · name · startup_name · description</text>
+  <text x="14" y="197" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">status CHECK(draft|building_graph|open|consensus|rebuttals|final|failed)</text>
+  <text x="14" y="209" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">collection_closed_at · graph_built_at · created_at</text>
 
   <!-- project_members -->
-  <rect x="8" y="216" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="231" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">project_members</text>
-  <text x="14" y="245" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · user_id(fk) · role(attendee|reviewer)</text>
-  <text x="14" y="259" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">joined_at · UNIQUE(project_id, user_id)</text>
+  <rect x="8" y="226" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="241" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">project_members</text>
+  <text x="14" y="255" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · user_id(fk) · role(attendee|reviewer)</text>
+  <text x="14" y="269" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">joined_at · UNIQUE(project_id, user_id)</text>
 
   <!-- assets -->
-  <rect x="8" y="276" width="294" height="72" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="291" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">assets</text>
-  <text x="14" y="305" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · uploaded_by(fk) · filename · storage_key</text>
-  <text x="14" y="317" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">kind CHECK(pdf|pptx|audio|image|spreadsheet|text|video)</text>
-  <text x="14" y="329" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">status CHECK(pending|processing|embedding|ready|failed)</text>
-  <text x="14" y="341" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">file_size · chunk_count · error_message · processed_at</text>
+  <rect x="8" y="286" width="294" height="72" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="301" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">assets</text>
+  <text x="14" y="315" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · uploaded_by(fk) · filename · storage_key</text>
+  <text x="14" y="327" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">kind CHECK(pdf|pptx|audio|image|spreadsheet|text|video)</text>
+  <text x="14" y="339" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">status CHECK(pending|processing|embedding|ready|failed)</text>
+  <text x="14" y="351" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">file_size · chunk_count · error_message · processed_at</text>
 
   <!-- conversation_sessions -->
-  <rect x="8" y="356" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="371" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">conversation_sessions</text>
-  <text x="14" y="385" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · user_id(fk) · status(active|submitted)</text>
-  <text x="14" y="399" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">created_at · UNIQUE(project_id, user_id)</text>
+  <rect x="8" y="366" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="381" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">conversation_sessions</text>
+  <text x="14" y="395" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · user_id(fk) · status(active|submitted)</text>
+  <text x="14" y="409" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">created_at · UNIQUE(project_id, user_id)</text>
 
   <!-- conversation_messages -->
-  <rect x="8" y="416" width="294" height="62" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="431" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">conversation_messages</text>
-  <text x="14" y="445" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · session_id(fk) · role(user|assistant) · content</text>
-  <text x="14" y="457" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">traversal_summary(jsonb) · sources(text[])</text>
-  <text x="14" y="469" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">created_at</text>
+  <rect x="8" y="426" width="294" height="62" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="441" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">conversation_messages</text>
+  <text x="14" y="455" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · session_id(fk) · role(user|assistant) · content</text>
+  <text x="14" y="467" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">traversal_summary(jsonb) · sources(text[])</text>
+  <text x="14" y="479" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">created_at</text>
 
   <!-- flow_template_versions -->
-  <rect x="8" y="486" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="501" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">flow_template_versions  ← global, not per-project</text>
-  <text x="14" y="515" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · version_number · status(draft|live|archived)</text>
-  <text x="14" y="529" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">published_by(fk) · published_at · UNIQUE live version</text>
+  <rect x="8" y="496" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="511" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">flow_template_versions  ← global, not per-project</text>
+  <text x="14" y="525" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · version_number · status(draft|live|archived)</text>
+  <text x="14" y="539" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">published_by(fk) · published_at · UNIQUE live version</text>
 
   <!-- flow_template_cells -->
-  <rect x="8" y="546" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="561" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">flow_template_cells</text>
-  <text x="14" y="575" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · template_version_id(fk) · topic · topic_prompt</text>
-  <text x="14" y="589" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">position_index · UNIQUE(version_id, position_index)</text>
+  <rect x="8" y="556" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="571" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">flow_template_cells</text>
+  <text x="14" y="585" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · template_version_id(fk) · topic · topic_prompt</text>
+  <text x="14" y="599" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">position_index · UNIQUE(version_id, position_index)</text>
 
-  <!-- analyses -->
-  <rect x="8" y="606" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="621" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">analyses</text>
-  <text x="14" y="635" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · stage CHECK(group|final)</text>
-  <text x="14" y="647" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">output(jsonb) · model · tokens_used · created_at</text>
-  <text x="14" y="659" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">projects.flow_template_version_id(fk) ← locked at creation</text>
+  <!-- analyses — height 52→62, text y corrected -->
+  <rect x="8" y="616" width="294" height="62" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="631" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">analyses</text>
+  <text x="14" y="645" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · stage CHECK(group|final)</text>
+  <text x="14" y="657" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">output(jsonb) · model · tokens_used · created_at</text>
+  <text x="14" y="669" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">projects.flow_template_version_id(fk) ← locked at creation</text>
 
-  <!-- notifications + prompt_versions -->
-  <rect x="8" y="656" width="140" height="42" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="671" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">notifications</text>
-  <text x="14" y="683" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">6 kinds · user_id(fk)</text>
-  <text x="14" y="695" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">read_at · created_at</text>
+  <!-- notifications + prompt_versions — moved below analyses bottom (678+8=686) -->
+  <rect x="8" y="686" width="140" height="50" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="701" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">notifications</text>
+  <text x="14" y="713" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">6 kinds · user_id(fk)</text>
+  <text x="14" y="725" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">read_at · created_at</text>
 
-  <rect x="162" y="656" width="140" height="42" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="168" y="671" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">prompt_versions</text>
-  <text x="168" y="683" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">stage_key · body · status</text>
-  <text x="168" y="695" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">UNIQUE live per stage</text>
+  <rect x="162" y="686" width="140" height="50" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="168" y="701" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">prompt_versions</text>
+  <text x="168" y="713" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">stage_key · body · status</text>
+  <text x="168" y="725" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">UNIQUE live per stage</text>
 
-  <line x1="8" y1="708" x2="302" y2="708" stroke="#30363d" stroke-width="1"/>
+  <line x1="8" y1="744" x2="302" y2="744" stroke="#30363d" stroke-width="1"/>
 
   <!-- flow_cells -->
-  <rect x="8" y="716" width="294" height="62" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="731" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">flow_cells  ← Analysis Flow Canvas</text>
-  <text x="14" y="745" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · topic · topic_prompt · admin_context</text>
-  <text x="14" y="757" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">asset_ids(uuid[]) · output_cache(jsonb) · position_x · position_y</text>
-  <text x="14" y="769" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">created_at</text>
+  <rect x="8" y="752" width="294" height="62" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="767" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">flow_cells  ← Analysis Flow Canvas</text>
+  <text x="14" y="781" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · topic · topic_prompt · admin_context</text>
+  <text x="14" y="793" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">asset_ids(uuid[]) · output_cache(jsonb) · position_x · position_y</text>
+  <text x="14" y="805" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">created_at</text>
 
-  <!-- flow_edges -->
-  <rect x="8" y="786" width="294" height="42" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
-  <text x="14" y="801" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">flow_edges</text>
-  <text x="14" y="815" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · source_cell_id(fk) · target_cell_id(fk)</text>
-  <text x="14" y="827" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">UNIQUE(source_cell_id, target_cell_id) · output propagates downstream</text>
+  <!-- flow_edges — height 42→52 to contain 3 lines -->
+  <rect x="8" y="822" width="294" height="52" rx="4" fill="#0d0d1f" stroke="#7c3aed" stroke-width="1"/>
+  <text x="14" y="837" fill="#a371f7" font-size="9" font-family="'SF Mono',monospace" font-weight="700">flow_edges</text>
+  <text x="14" y="851" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">id · project_id(fk) · source_cell_id(fk) · target_cell_id(fk)</text>
+  <text x="14" y="865" fill="#8b949e" font-size="8" font-family="'SF Mono',monospace">UNIQUE(source_cell_id, target_cell_id) · output propagates downstream</text>
 </g>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -1012,6 +1013,20 @@ let tx=0, ty=0, scale=0.7, dragging=false, startX, startY;
 // Fix layering: move all top-level connector paths behind box groups
 const bgRect = vp.querySelector(':scope > rect');
 [...vp.querySelectorAll(':scope > path')].forEach(p => vp.insertBefore(p, bgRect.nextSibling));
+
+// Clip each box group to its outer rect to prevent text horizontal overflow
+const defs = document.querySelector('defs');
+[...vp.querySelectorAll(':scope > g')].forEach((g, i) => {
+  const r = g.querySelector(':scope > rect');
+  if (!r || !r.getAttribute('width')) return;
+  const id = `clip-g${i}`;
+  const cp = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+  cp.id = id;
+  const cr = r.cloneNode(false);
+  cp.appendChild(cr);
+  defs.appendChild(cp);
+  g.setAttribute('clip-path', `url(#${id})`);
+});
 
 function applyTransform() {
   vp.setAttribute('transform', `translate(${tx},${ty}) scale(${scale})`);
