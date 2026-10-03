@@ -9,6 +9,7 @@
   body { background: #0D1117; overflow: hidden; font-family: 'SF Mono', 'Fira Code', monospace; }
   svg#canvas { width: 100vw; height: 100vh; cursor: grab; display: block; }
   svg#canvas.grabbing { cursor: grabbing; }
+  #viewport > g, #viewport > path { transition: opacity 0.18s ease; }
   #legend {
     position: fixed; top: 16px; right: 16px;
     background: rgba(13,17,23,0.92); border: 1px solid #30363d;
@@ -1008,10 +1009,30 @@ const svg = document.getElementById('canvas');
 const vp = document.getElementById('viewport');
 let tx=0, ty=0, scale=0.7, dragging=false, startX, startY;
 
+// Fix layering: move all top-level connector paths to render behind box groups
+const bgRect = vp.querySelector(':scope > rect');
+[...vp.querySelectorAll(':scope > path')].forEach(p => vp.insertBefore(p, bgRect.nextSibling));
+
 function applyTransform() {
   vp.setAttribute('transform', `translate(${tx},${ty}) scale(${scale})`);
 }
 applyTransform();
+
+// Hover: highlight hovered box, dim everything else
+const boxes = [...vp.querySelectorAll(':scope > g')];
+const lines = [...vp.querySelectorAll(':scope > path')];
+
+boxes.forEach(box => {
+  box.addEventListener('mouseenter', () => {
+    if (dragging) return;
+    boxes.forEach(b => b.style.opacity = b === box ? '1' : '0.12');
+    lines.forEach(l => l.style.opacity = '0.07');
+  });
+  box.addEventListener('mouseleave', () => {
+    boxes.forEach(b => b.style.opacity = '');
+    lines.forEach(l => l.style.opacity = '');
+  });
+});
 
 svg.addEventListener('mousedown', e => {
   dragging=true; startX=e.clientX-tx; startY=e.clientY-ty;
@@ -1021,7 +1042,12 @@ window.addEventListener('mousemove', e => {
   if(!dragging) return;
   tx=e.clientX-startX; ty=e.clientY-startY; applyTransform();
 });
-window.addEventListener('mouseup', () => { dragging=false; svg.classList.remove('grabbing'); });
+window.addEventListener('mouseup', () => {
+  dragging=false;
+  svg.classList.remove('grabbing');
+  boxes.forEach(b => b.style.opacity = '');
+  lines.forEach(l => l.style.opacity = '');
+});
 
 svg.addEventListener('wheel', e => {
   e.preventDefault();
