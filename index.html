@@ -1006,10 +1006,10 @@
 
 <script>
 const svg = document.getElementById('canvas');
-const vp = document.getElementById('viewport');
+const vp  = document.getElementById('viewport');
 let tx=0, ty=0, scale=0.7, dragging=false, startX, startY;
 
-// Fix layering: move all top-level connector paths to render behind box groups
+// Fix layering: move all top-level connector paths behind box groups
 const bgRect = vp.querySelector(':scope > rect');
 [...vp.querySelectorAll(':scope > path')].forEach(p => vp.insertBefore(p, bgRect.nextSibling));
 
@@ -1018,20 +1018,63 @@ function applyTransform() {
 }
 applyTransform();
 
-// Hover: highlight hovered box, dim everything else
 const boxes = [...vp.querySelectorAll(':scope > g')];
 const lines = [...vp.querySelectorAll(':scope > path')];
+
+// Returns box bounds in viewport coordinate space
+function boxBounds(g) {
+  const t = (g.getAttribute('transform') || '').match(/translate\(([-\d.]+)[,\s]+([-\d.]+)\)/);
+  const ox = t ? parseFloat(t[1]) : 0, oy = t ? parseFloat(t[2]) : 0;
+  const b = g.getBBox();
+  return { x: ox + b.x, y: oy + b.y, w: b.width, h: b.height };
+}
+
+// Returns start + end coords of a path's d attribute
+function pathEndpoints(path) {
+  const pairs = [...path.getAttribute('d').matchAll(/([-\d.]+),([-\d.]+)/g)];
+  if (pairs.length < 1) return null;
+  return {
+    s: { x: +pairs[0][1],                  y: +pairs[0][2] },
+    e: { x: +pairs[pairs.length-1][1],     y: +pairs[pairs.length-1][2] }
+  };
+}
+
+function near(pt, b, pad) {
+  pad = pad || 18;
+  return pt.x >= b.x-pad && pt.x <= b.x+b.w+pad && pt.y >= b.y-pad && pt.y <= b.y+b.h+pad;
+}
+
+function resetAll() {
+  boxes.forEach(b => b.style.opacity = '');
+  lines.forEach(l => l.style.opacity = '');
+}
 
 boxes.forEach(box => {
   box.addEventListener('mouseenter', () => {
     if (dragging) return;
-    boxes.forEach(b => b.style.opacity = b === box ? '1' : '0.12');
-    lines.forEach(l => l.style.opacity = '0.07');
+    const bb = boxBounds(box);
+
+    // Lines whose start or end touches this box
+    const hotLines = lines.filter(l => {
+      const ep = pathEndpoints(l);
+      return ep && (near(ep.s, bb) || near(ep.e, bb));
+    });
+
+    // Boxes at the other end of those lines
+    const lit = new Set([box]);
+    hotLines.forEach(l => {
+      const ep = pathEndpoints(l);
+      boxes.forEach(b => {
+        if (b === box) return;
+        const ob = boxBounds(b);
+        if (near(ep.s, ob) || near(ep.e, ob)) lit.add(b);
+      });
+    });
+
+    boxes.forEach(b => b.style.opacity = lit.has(b) ? '1' : '0.1');
+    lines.forEach(l => l.style.opacity = hotLines.includes(l) ? '0.9' : '0.05');
   });
-  box.addEventListener('mouseleave', () => {
-    boxes.forEach(b => b.style.opacity = '');
-    lines.forEach(l => l.style.opacity = '');
-  });
+  box.addEventListener('mouseleave', resetAll);
 });
 
 svg.addEventListener('mousedown', e => {
@@ -1042,43 +1085,33 @@ window.addEventListener('mousemove', e => {
   if(!dragging) return;
   tx=e.clientX-startX; ty=e.clientY-startY; applyTransform();
 });
-window.addEventListener('mouseup', () => {
-  dragging=false;
-  svg.classList.remove('grabbing');
-  boxes.forEach(b => b.style.opacity = '');
-  lines.forEach(l => l.style.opacity = '');
-});
+window.addEventListener('mouseup', () => { dragging=false; svg.classList.remove('grabbing'); resetAll(); });
 
 svg.addEventListener('wheel', e => {
   e.preventDefault();
   const delta = e.deltaY > 0 ? 0.9 : 1.1;
-  const rect = svg.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  tx = mx - (mx - tx) * delta;
-  ty = my - (my - ty) * delta;
-  scale *= delta;
-  applyTransform();
+  const r = svg.getBoundingClientRect();
+  const mx = e.clientX-r.left, my = e.clientY-r.top;
+  tx = mx-(mx-tx)*delta; ty = my-(my-ty)*delta; scale*=delta; applyTransform();
 }, { passive: false });
 
-// Touch support
-let lastDist = 0;
+let lastDist=0;
 svg.addEventListener('touchstart', e => {
   if(e.touches.length===1){ dragging=true; startX=e.touches[0].clientX-tx; startY=e.touches[0].clientY-ty; }
-  if(e.touches.length===2){ lastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY); }
-}, {passive:true});
+  if(e.touches.length===2){ lastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY); }
+},{passive:true});
 svg.addEventListener('touchmove', e => {
-  if(e.touches.length===1 && dragging){ tx=e.touches[0].clientX-startX; ty=e.touches[0].clientY-startY; applyTransform(); }
+  if(e.touches.length===1&&dragging){ tx=e.touches[0].clientX-startX; ty=e.touches[0].clientY-startY; applyTransform(); }
   if(e.touches.length===2){
-    const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-    const delta=dist/lastDist; lastDist=dist; scale*=delta; applyTransform();
+    const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    scale*=d/lastDist; lastDist=d; applyTransform();
   }
-}, {passive:true});
-svg.addEventListener('touchend', ()=>{ dragging=false; });
+},{passive:true});
+svg.addEventListener('touchend',()=>{ dragging=false; });
 
-document.getElementById('zoomIn').onclick  = ()=>{ scale*=1.2; applyTransform(); };
-document.getElementById('zoomOut').onclick = ()=>{ scale*=0.85; applyTransform(); };
-document.getElementById('zoomReset').onclick = ()=>{ tx=0; ty=0; scale=0.7; applyTransform(); };
+document.getElementById('zoomIn').onclick   = ()=>{ scale*=1.2; applyTransform(); };
+document.getElementById('zoomOut').onclick  = ()=>{ scale*=0.85; applyTransform(); };
+document.getElementById('zoomReset').onclick= ()=>{ tx=0; ty=0; scale=0.7; applyTransform(); };
 </script>
 </body>
 </html>
